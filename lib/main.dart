@@ -16,7 +16,7 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> _openBox() async {
   final directory = await getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
+  Hive.init(directory.path); 
   await Hive.initFlutter();
   Hive.registerAdapter(UserDbAdapter());
   await Hive.openBox('userDb');
@@ -28,8 +28,8 @@ void main() async {
 
   Loggy.initLoggy(logPrinter: const PrettyPrinter(showColors: true));
   await _openBox();
-  //TODO: change the ILocalAuthSource to one using HIVE
-  Get.put<ILocalAuthSource>(SharedPrefLocalAuthSource());
+  
+  Get.put<ILocalAuthSource>(HiveSource());
   Get.put<IAuthRepo>(AuthRepo(Get.find()));
   Get.put(AuthUseCase(Get.find()));
   Get.put(AuthController(Get.find()));
